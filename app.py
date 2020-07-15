@@ -9,6 +9,7 @@ db = SQLAlchemy(app)
 
 #xltocsv = db.Table('xltocsv', db.metadata, autoload = True, autoload_with = db.engine)
 
+#AUTO-MAP technique used to fetch existing database
 Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 new = Base.classes.test
@@ -19,11 +20,14 @@ def my_form():
 
 @app.route('/post_user', methods=['POST'])
 def my_form_post():
-    siten = request.form['siten']
+    siten = request.form['siten'] #keyword is taken from user
     print (siten)
 
     
-    search= db.session.query(new).all()
+    search= db.session.query(new).all() #db table is stored in variable
+
+    # here I want to display entire row which matches the keyword provided by user input, 
+    #but i am getting whole list and last row is printed
     for siten in search:
         print ( siten.sitename)
     
